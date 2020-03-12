@@ -108,4 +108,15 @@ main (int   argc,
         Tss2_Tcti_Finalize (tcti_context [i]);
         free (tcti_context [i]);
     }
+
+    for (i = 0; i < 250; ++i) {
+        rc = tcti_tabrmd_init (&tcti_context [0],
+                               opts.tcti_conf,
+                               opts.tcti_retries);
+        if (tcti_context [0] == NULL || rc != TSS2_RC_SUCCESS) {
+            g_error ("failed to connect to TCTI: 0x%" PRIx32, rc);
+        }
+        Tss2_Tcti_Finalize (tcti_context [0]);
+        free (tcti_context [0]);
+    }
 }
